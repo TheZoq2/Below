@@ -22,6 +22,8 @@ public:
 	void setSword(std::string filename, Vec3 scale);
 private:
 	int objID;
+	int swordTargetObj;
+	int swordTargetImg;
 
 	Vec3 pos;
 
@@ -29,5 +31,6 @@ private:
 	float rotationX;
 
 	Sword sword;
+	float swordTargetAngle;
 };
 

@@ -14,5 +14,7 @@ public:
 	static float time;
 	static float frameTime;
 	static float speedMod;
+
+	static float gamespeed; //The current speed of the game
 };
 

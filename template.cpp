@@ -55,8 +55,9 @@ void app::Loop (void)
 	}
 	if(gamestate == GAMESETUP)
 	{
+		float swordScale = 0.03;
 		player.setup();
-		player.setSword("media/sword.obj", Vec3(0.02, 0.02, 0.02));
+		player.setSword("media/sword.obj", Vec3(swordScale, swordScale, swordScale));
 
 		world.loadFile("levels/level1.txt");
 
@@ -70,15 +71,13 @@ void app::Loop (void)
 	if(gamestate == GAME)
 	{
 		player.update(&world);
-
-		agk::Print("Ingame");
 	}
 
-	agk::Print(Input::mouseMove.x);
 
-	agk::PrintC("Last key: ");agk::Print(agk::GetRawLastKey());
 	agk::Print( agk::ScreenFPS() );
-	agk::Print("SpeedMod: ");agk::PrintC(Global::speedMod);
+	agk::PrintC("Last key: ");agk::Print(agk::GetRawLastKey());
+	agk::PrintC("SpeedMod: ");agk::Print(Global::speedMod);
+	agk::PrintC("Gamespeed");agk::Print(Global::gamespeed);
 	agk::Sync();
 }
 

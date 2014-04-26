@@ -12,7 +12,15 @@ Player::~Player(void)
 
 void Player::setup()
 {
-	
+	swordTargetObj = agk::CreateObjectPlane(1, 1);
+	agk::SetObjectScale(swordTargetObj, 0.3, 0.3, 0.3);
+
+	agk::SetObjectCullMode(swordTargetObj, 2);
+	agk::SetObjectVisible(swordTargetObj, 0);
+
+	swordTargetImg = agk::LoadImage("media/swingTarget.png");
+	agk::SetObjectImage(swordTargetObj, swordTargetImg, 0);
+	agk::SetObjectTransparency(swordTargetObj, 1);
 }
 void Player::update(World* world)
 {
@@ -30,9 +38,41 @@ void Player::update(World* world)
 
 	float colWidth = 0.2;
 
-	//Mouse movement
-	angleY = angleY + Input::mouseMove.x * lookModY * sensitivity;
-	rotationX = rotationX + Input::mouseMove.y * lookModX * sensitivity;
+	if(sword.getSwingState() != Sword::READY && sword.getSwingState() != Sword::PREPARE)
+	{
+		//Mouse movement
+		angleY = angleY + Input::mouseMove.x * lookModY * sensitivity;
+		rotationX = rotationX + Input::mouseMove.y * lookModX * sensitivity;
+	}
+	else
+	{
+		float swordSenisitivty = 0.04;
+		swordTargetAngle = swordTargetAngle - Input::mouseMove.x * swordSenisitivty;
+
+		if(swordTargetAngle > 56)
+		{
+			swordTargetAngle = 56;
+		}
+		if(swordTargetAngle < -88)
+		{
+			swordTargetAngle = -88;
+		}
+
+		sword.setSwingTargetAngleX(swordTargetAngle);
+
+		/*//Showing the sword targeting indicator
+		agk::SetObjectVisible(swordTargetObj, 1);
+		
+		Vec3 swordPos = sword.getCurrentPosition();
+		Vec3 swordAngle = sword.getCurrentAngle();
+
+		agk::SetObjectPosition(swordTargetObj, swordPos.x, swordPos.y, swordPos.z);
+		agk::SetObjectRotation(swordTargetObj, swordAngle.x, swordAngle.y, swordAngle.z);
+
+		agk::MoveObjectLocalX(swordTargetObj, 0.3 * .5);
+		agk::MoveObjectLocalY(swordTargetObj, 0.3 * .5);
+		//agk::RotateObjectLocalZ(swordTargetObj, 90);*/
+	}
 
 	if(rotationX > 90)
 	{
@@ -105,20 +145,44 @@ void Player::update(World* world)
 	agk::SetCameraPosition(1, pos.x, pos.y + headOffset, pos.z);
 
 	//Positioning the sword
-	sword.setAngle(agk::GetCameraAngleX(1), agk::GetCameraAngleY(1), agk::GetCameraAngleZ(1));
+	sword.setBaseAngle(0, agk::GetCameraAngleY(1) - 90, -15);
+
+	float swordOffsetX = 0.3;
+	float swordOffsetY = 0.3;
 
 	Vec3 swordOffset(0,0,0);
-	swordOffset.x = agk::Cos(-angleY + 90) * 0.3;
-	swordOffset.y = 0.2;
-	swordOffset.z = agk::Sin(-angleY + 90) * 0.3;
+	swordOffset.x = agk::Cos(-angleY + 90) * swordOffsetX;
+	swordOffset.y = -0;
+	swordOffset.z = agk::Sin(-angleY + 90) * swordOffsetX;
+
 
 	//Adding the offset to the left
-	swordOffset.x = swordOffset.x + agk::Cos(-angleY) * 0.3;
-	swordOffset.z = swordOffset.z + agk::Sin(-angleY) * 0.3;
+	swordOffset.x = swordOffset.x + agk::Cos(-angleY) * swordOffsetY;
+	swordOffset.z = swordOffset.z + agk::Sin(-angleY) * swordOffsetY;
 
 	Vec3 swordPos(pos.x + swordOffset.x, pos.y + swordOffset.y, pos.z + swordOffset.z);
 
 	sword.setPosition(swordPos);
+
+	//Updating the sword
+	if(agk::GetRawMouseLeftPressed())
+	{
+		swordTargetAngle = 0;
+	}
+	if(agk::GetRawMouseLeftState())
+	{
+		sword.setSwingTargetState(Sword::PREPARE);
+	}
+	else if(agk::GetRawMouseLeftReleased())
+	{
+		sword.setSwingTargetState(Sword::SWING);
+	}
+	else
+	{
+		sword.setSwingTargetState(Sword::NONE);
+	}
+
+	sword.update();
 }
 
 void Player::setPosition(Vec3 pos)

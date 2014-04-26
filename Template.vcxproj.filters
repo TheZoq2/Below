@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Core.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="template.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="template.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{4626b3e5-044d-406b-ae39-95c464665ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{502b24ca-aa17-45dd-b654-ea853c05d8d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

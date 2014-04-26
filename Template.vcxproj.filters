@@ -25,6 +25,7 @@
     <ClCompile Include="Sword.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template.h">
@@ -48,6 +49,7 @@
     <ClInclude Include="Global.h">
       <Filter>headers</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

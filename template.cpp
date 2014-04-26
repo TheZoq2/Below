@@ -71,6 +71,7 @@ void app::Loop (void)
 	if(gamestate == GAME)
 	{
 		player.update(&world);
+		world.update();
 	}
 
 

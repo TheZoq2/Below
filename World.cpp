@@ -8,18 +8,6 @@ void PartBase::createBox(float w, float h, float d)
 
 	agk::SetObjectVisible(objID, 0);
 }
-
-void PartBase::setTexture(int index, std::string texturePath)
-{
-	if(index < 0 || index > 7)
-	{
-		return;
-	}
-	
-	textures[index] = agk::LoadImage(texturePath.data());
-
-	agk::SetObjectImage(objID, textures[index], index);
-}
 void PartBase::reset()
 {
 	objID = 0;
@@ -29,6 +17,30 @@ void PartBase::reset()
 	{
 		textures[i] = 0;
 	}
+}
+
+void PartBase::setTexture(int index, std::string texturePath)
+{
+	if(index < 0 || index > 7)
+	{
+		return;
+	}
+	
+	textures[index] = agk::LoadImage(texturePath.data());
+	agk::SetImageMagFilter(textures[index], 1);
+	agk::SetImageMinFilter(textures[index], 1);
+
+	agk::SetObjectImage(objID, textures[index], index);
+}
+void PartBase::setShader(std::string vertex, std::string fragment)
+{
+	shaderID = agk::LoadShader(vertex.data(), fragment.data());
+
+	agk::SetObjectShader(objID, shaderID);
+}
+void PartBase::setShaderConstant(std::string name, float x, float y, float z, float w)
+{
+	agk::SetShaderConstantByName(shaderID, name.data(), x, y, z, w);
 }
 
 int PartBase::getObjID()
@@ -85,15 +97,35 @@ void World::setup()
 	//Loading all the base floors
 	PartBase tempBase;
 	tempBase.createBox(1, 1, 1);
-	tempBase.setTexture(0, "media/floor1.png");
+	tempBase.setTexture(0, "media/floor2.png");
+	tempBase.setShader("shaders/floor.vert", "shaders/floor.frag");
 
 	floorBase->push_back(tempBase);
 
 	//Loading base walls
 	tempBase.reset();
 	tempBase.createBox(1, 2, 1);
-	tempBase.setTexture(0, "media/wall1.png");
+	tempBase.setTexture(0, "media/wall2.png");
+	tempBase.setShader("shaders/floor.vert", "shaders/floor.frag");
 	wallBase->push_back(tempBase);
+}
+void World::update()
+{
+	for(unsigned int i = 0; i < floorBase->size(); i++)
+	{
+		float camX = agk::GetCameraX(1);
+		float camY = agk::GetCameraY(1);
+		float camZ = agk::GetCameraZ(1);
+		floorBase->at(i).setShaderConstant("camPos", camX, camY, camZ, 1);
+	}
+
+	for(unsigned int i = 0; i < wallBase->size(); i++)
+	{
+		float camX = agk::GetCameraX(1);
+		float camY = agk::GetCameraY(1);
+		float camZ = agk::GetCameraZ(1);
+		wallBase->at(i).setShaderConstant("camPos", camX, camY, camZ, 1);
+	}
 }
 
 void World::loadFile(std::string file)

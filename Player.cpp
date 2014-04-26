@@ -13,7 +13,7 @@ Player::~Player(void)
 void Player::setup()
 {
 	swordTargetObj = agk::CreateObjectPlane(1, 1);
-	agk::SetObjectScale(swordTargetObj, 0.3, 0.3, 0.3);
+	agk::SetObjectScale(swordTargetObj, 0.3f, 0.3f, 0.3f);
 
 	agk::SetObjectCullMode(swordTargetObj, 2);
 	agk::SetObjectVisible(swordTargetObj, 0);
@@ -24,19 +24,19 @@ void Player::setup()
 }
 void Player::update(World* world)
 {
-	float lookModX = 0.1;
-	float lookModY = 0.13;
+	float lookModX = 0.1f;
+	float lookModY = 0.13f;
 	float sensitivity = 1;
 
-	float headOffset = 0.5;
-	float moveSpeed = 0.07;
+	float headOffset = 0.5f;
+	float moveSpeed = 0.07f;
 
 	int forwardKey = 87;
 	int leftKey = 65;
 	int rightKey = 68;
 	int backKey = 83;
 
-	float colWidth = 0.2;
+	float colWidth = 0.2f;
 
 	if(sword.getSwingState() != Sword::READY && sword.getSwingState() != Sword::PREPARE)
 	{
@@ -46,16 +46,16 @@ void Player::update(World* world)
 	}
 	else
 	{
-		float swordSenisitivty = 0.04;
+		float swordSenisitivty = 0.04f;
 		swordTargetAngle = swordTargetAngle - Input::mouseMove.x * swordSenisitivty;
 
 		if(swordTargetAngle > 56)
 		{
 			swordTargetAngle = 56;
 		}
-		if(swordTargetAngle < -88)
+		if(swordTargetAngle < -55)
 		{
-			swordTargetAngle = -88;
+			swordTargetAngle = -55;
 		}
 
 		sword.setSwingTargetAngleX(swordTargetAngle);
@@ -147,8 +147,8 @@ void Player::update(World* world)
 	//Positioning the sword
 	sword.setBaseAngle(0, agk::GetCameraAngleY(1) - 90, -15);
 
-	float swordOffsetX = 0.3;
-	float swordOffsetY = 0.3;
+	float swordOffsetX = 0.3f;
+	float swordOffsetY = 0.3f;
 
 	Vec3 swordOffset(0,0,0);
 	swordOffset.x = agk::Cos(-angleY + 90) * swordOffsetX;

@@ -28,12 +28,29 @@ public:
 	Vec3 getCurrentPosition();
 private:
 	int objID;
+	int targetPosObj;
+	int targetPointObj;
+	int swingPosObj;
 
 	Vec3 basePos;
 	Vec3 baseAngle;
-	SWINGSTATE targetState;
 
-	swingTargetAngleX;
+	SWINGSTATE targetState;
+	SWINGSTATE state;
+
+	Vec3 cAngle;
+	Vec3 cPos;
+
+	float swingTargetAngleX;
+	float finalSwingTAngle; //The angle of the swingTarget when the swing starts
+	float swingStartTime;
+
+	Vec3 targetPos;
+	Vec3 targetPoint;
+	Vec3 swingPos;
+
+	Vec3 posPos;
+	Vec3 pointPos;
 	/*float swingStart;
 
 	Vec3 basePos;

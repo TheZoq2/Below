@@ -12,6 +12,8 @@ class PartBase
 public:
 	void createBox(float w, float h, float d);
 	void setTexture(int index, std::string texturePath);
+	void setShader(std::string vertex, std::string fragment);
+	void setShaderConstant(std::string name, float x, float y, float z, float w);
 	void reset();
 
 	int getObjID();
@@ -47,6 +49,7 @@ public:
 	void setup(); //Load all the base media
 
 	void loadFile(std::string file);
+	void update();
 	void clear();
 
 	Vec3 getSpawnpos();

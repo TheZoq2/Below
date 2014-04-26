@@ -42,3 +42,12 @@ Vec3 Vec3::operator=(Vec3 n)
 
 	return *this;
 }
+Vec3 Vec3::operator+(Vec3 n)
+{
+	Vec3 newVec = *this;
+	newVec.x += n.x;
+	newVec.y += n.y;
+	newVec.z += n.z;
+
+	return newVec;
+}

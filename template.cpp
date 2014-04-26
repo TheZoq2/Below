@@ -46,7 +46,7 @@ void app::Loop (void)
 	}
 	if(gamestate == MENU)
 	{
-		agk::Print("Press spacebar to start");
+		agk::Print("Press space to start");
 
 		if(agk::GetRawKeyPressed(32) == 1)
 		{
@@ -56,6 +56,8 @@ void app::Loop (void)
 	if(gamestate == GAMESETUP)
 	{
 		player.setup();
+		player.setSword("media/sword.obj", Vec3(0.02, 0.02, 0.02));
+
 		world.loadFile("levels/level1.txt");
 
 		//Selecting a spawnpoint

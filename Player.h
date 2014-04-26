@@ -6,6 +6,7 @@
 #include "Vec.h"
 #include "Input.h"
 #include "Global.h"
+#include "Sword.h"
 
 class Player
 {
@@ -17,6 +18,8 @@ public:
 	void update(World* world);
 
 	void setPosition(Vec3 pos);
+
+	void setSword(std::string filename, Vec3 scale);
 private:
 	int objID;
 
@@ -24,5 +27,7 @@ private:
 
 	float angleY;
 	float rotationX;
+
+	Sword sword;
 };
 

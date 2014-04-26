@@ -25,6 +25,15 @@ Vec2 Vec2::operator-(Vec2 other)
 	return newVec;
 }
 
+Vec3::Vec3()
+{
+}
+Vec3::Vec3(float x, float y, float z)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
 Vec3 Vec3::operator=(Vec3 n)
 {
 	this->x = n.x;

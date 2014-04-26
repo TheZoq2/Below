@@ -19,7 +19,12 @@
     <ClCompile Include="Input.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Global.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template.h">
@@ -37,7 +42,12 @@
     <ClInclude Include="Input.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h" />
+    <ClInclude Include="Sword.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

@@ -12,11 +12,7 @@ Player::~Player(void)
 
 void Player::setup()
 {
-	//objID = agk::CreateObjectCone(1, 0.5, 20);
-	//objID = agk::CreateObjectCylinder(1.5, 0.5, 10);
-	objID = agk::CreateObjectBox(1, 1, 1);
-	agk::SetObjectRotation(objID, 90, 0, 0);
-	agk::SetObjectPosition(objID, 15, 3, 15);
+	
 }
 void Player::update(World* world)
 {
@@ -107,6 +103,22 @@ void Player::update(World* world)
 	agk::RotateCameraLocalX(1, rotationX);
 
 	agk::SetCameraPosition(1, pos.x, pos.y + headOffset, pos.z);
+
+	//Positioning the sword
+	sword.setAngle(agk::GetCameraAngleX(1), agk::GetCameraAngleY(1), agk::GetCameraAngleZ(1));
+
+	Vec3 swordOffset(0,0,0);
+	swordOffset.x = agk::Cos(-angleY + 90) * 0.3;
+	swordOffset.y = 0.2;
+	swordOffset.z = agk::Sin(-angleY + 90) * 0.3;
+
+	//Adding the offset to the left
+	swordOffset.x = swordOffset.x + agk::Cos(-angleY) * 0.3;
+	swordOffset.z = swordOffset.z + agk::Sin(-angleY) * 0.3;
+
+	Vec3 swordPos(pos.x + swordOffset.x, pos.y + swordOffset.y, pos.z + swordOffset.z);
+
+	sword.setPosition(swordPos);
 }
 
 void Player::setPosition(Vec3 pos)
@@ -114,4 +126,9 @@ void Player::setPosition(Vec3 pos)
 	this->pos = pos;
 
 	agk::SetObjectPosition(objID, pos.x, pos.y, pos.z);
+}
+
+void Player::setSword(std::string filename, Vec3 pos)
+{
+	sword.create(filename, pos);
 }

@@ -104,6 +104,7 @@
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Vec.cpp" />
     <ClCompile Include="World.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="Vec.h" />
     <ClInclude Include="World.h" />

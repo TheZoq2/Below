@@ -34,15 +34,18 @@ void Enemy::update(World* world, Player* player)
 	{
 		sword.setSwingTargetState(Sword::PREPARE);
 
+		character.setTarget(pos);
+	}
+	else if(dist < 1.5)
+	{
 		if(sword.getSwordReady() == true && sword.getSwingState() == Sword::PREPARE)
 		{
 			sword.setSwingTargetState(Sword::SWING);
 		}
-
-		character.setTarget(pos);
 	}
 	else
 	{
+		sword.setSwingTargetState(Sword::NONE);
 		character.setTarget(player->getPos());
 	}
 	//character.setTarget(player->getPos());

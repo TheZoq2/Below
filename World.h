@@ -32,6 +32,8 @@ public:
 	void remove();
 
 	int getObjID();
+
+	bool getInPart(Vec2 pos, float border);
 private:
 	int objID;
 
@@ -54,7 +56,7 @@ public:
 
 	Vec3 getSpawnpos();
 	Vec3 getEnemySpawnPos();
-	bool getTileWalkable(Vec2 pos);
+	bool getTileWalkable(Vec2 pos, float border);
 private:
 	std::vector<PartBase>* floorBase;
 	std::vector<PartBase>* wallBase;

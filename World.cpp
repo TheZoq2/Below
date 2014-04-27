@@ -74,6 +74,18 @@ int Part::getObjID()
 {
 	return objID;
 }
+bool Part::getInPart(Vec2 pos, float border)
+{
+	float xDiff = abs(x - pos.x);
+	float zDiff = abs(z - pos.y);
+
+	if(xDiff < border + 0.5 && zDiff < border + 0.5)
+	{
+		return true;
+	}
+
+	return false;
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
@@ -254,11 +266,11 @@ Vec3 World::getEnemySpawnPos()
 {
 	return getSpawnpos();
 }
-bool World::getTileWalkable(Vec2 pos)
+bool World::getTileWalkable(Vec2 pos, float border)
 {
 	//Checking if there is a wall there
 	//Converting to tile coords
-	int tileX = agk::Round(pos.x);
+	/*int tileX = agk::Round(pos.x);
 	int tileZ = agk::Round(pos.y);
 
 	if(tileX >= 0 && tileX < walls->size())
@@ -270,7 +282,19 @@ bool World::getTileWalkable(Vec2 pos)
 				return true; //This is not walkable
 			}
 		}
+	}*/
+		
+	for(unsigned int x = 0; x < walls->size(); x++)
+	{
+		for(unsigned int y = 0; y < walls->size(); y++)
+		{
+			if(walls->at(x)->at(y).getInPart(pos, border))
+			{
+				return true;
+			}
+		}
 	}
+	
 
 	return false;
 }

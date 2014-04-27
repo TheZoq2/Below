@@ -243,17 +243,17 @@ void Sword::update()
 	}
 
 	//Moving the pos towards the target
-	posPos.x = posPos.x + 0.1*(targetPos.x - posPos.x);
-	posPos.y = posPos.y + 0.1*(targetPos.y - posPos.y);
-	posPos.z = posPos.z + 0.1*(targetPos.z - posPos.z);
+	posPos.x = posPos.x + Global::speedMod * 0.1*(targetPos.x - posPos.x);
+	posPos.y = posPos.y + Global::speedMod * 0.1*(targetPos.y - posPos.y);
+	posPos.z = posPos.z + Global::speedMod * 0.1*(targetPos.z - posPos.z);
 
 	Vec3 pos = posPos + basePos;
 
 	agk::SetObjectPosition(objID, pos.x, pos.y, pos.z);
 
-	pointPos.x = pointPos.x + 0.05*(targetPoint.x - pointPos.x);
-	pointPos.y = pointPos.y + 0.05*(targetPoint.y - pointPos.y);
-	pointPos.z = pointPos.z + 0.05*(targetPoint.z - pointPos.z);
+	pointPos.x = pointPos.x + Global::speedMod * 0.05*(targetPoint.x - pointPos.x);
+	pointPos.y = pointPos.y + Global::speedMod * 0.05*(targetPoint.y - pointPos.y);
+	pointPos.z = pointPos.z + Global::speedMod * 0.05*(targetPoint.z - pointPos.z);
 
 	Vec3 lookAtPos = basePos + pointPos;
 
@@ -311,7 +311,7 @@ bool Sword::getSwordReady()
 	Vec3 posDiff = posPos - targetPos;
 	Vec3 pointDiff = pointPos - targetPoint;
 
-	float tolerance = 0.05;
+	float tolerance = 0.2;
 
 	if(abs(posDiff.x) < tolerance && abs(posDiff.y) < tolerance && abs(posDiff.z) < tolerance)
 	{

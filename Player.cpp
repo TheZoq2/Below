@@ -36,7 +36,7 @@ void Player::update(World* world)
 	int rightKey = 68;
 	int backKey = 83;
 
-	float colWidth = 0.2f;
+	float colWidth = 0.3f;
 
 	if(sword.getSwingState() != Sword::READY && sword.getSwingState() != Sword::PREPARE)
 	{
@@ -111,6 +111,7 @@ void Player::update(World* world)
 	float newPosX = pos.x + xMove;
 	float newPosZ = pos.z + zMove;
 
+	/*
 	//Checking collision on x axis
 	for(int x = -1; x <= 1; x++)
 	{
@@ -132,7 +133,15 @@ void Player::update(World* world)
 			newPosZ = pos.z;
 		}
 	}
-	
+	*/
+	if(world->getTileWalkable(Vec2(newPosX, pos.z), colWidth) == true) //If you can walk on the x axis
+	{
+		newPosX = pos.x;
+	}
+	if(world->getTileWalkable(Vec2(pos.x, newPosZ), colWidth) == true) //If you can walk on the x axis
+	{
+		newPosZ = pos.z;
+	}
 
 	pos.x = newPosX;
 	pos.z = newPosZ;

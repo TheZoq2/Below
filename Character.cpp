@@ -36,18 +36,30 @@ void Character::create()
 }
 void Character::update(World* world)
 {
-	float speed = 0.05 * Global::speedMod;
+	float speed = 0.07 * Global::speedMod;
 	//calculating the angle between the character and the target
 	float diffX = target.x - pos.x;
 	float diffZ = target.z - pos.z;
 
-	//'moving towards the target
+	//moving towards the target
 	if(abs(diffX) > 0.1 || abs(diffZ) >0.1)
 	{
 		angle.y = agk::ATanFull(diffX, diffZ);
 
-		pos.x = pos.x + agk::Cos(angle.y - 90) * speed;
-		pos.z = pos.z + agk::Sin(angle.y - 90) * speed;
+		float newX = pos.x + agk::Cos(angle.y - 90) * speed;
+		float newZ = pos.z + agk::Sin(angle.y - 90) * speed;
+
+		if(world->getTileWalkable(Vec2(newX, pos.z), 0.3f))
+		{
+			newX = pos.x;
+		}
+		if(world->getTileWalkable(Vec2(pos.x, newZ), 0.3f))
+		{
+			newZ = pos.z;
+		}
+
+		pos.x = newX;
+		pos.z = newZ;
 
 		angle.y = -angle.y;
 	}

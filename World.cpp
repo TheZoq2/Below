@@ -250,6 +250,10 @@ Vec3 World::getSpawnpos()
 
 	return pos;
 }
+Vec3 World::getEnemySpawnPos()
+{
+	return getSpawnpos();
+}
 bool World::getTileWalkable(Vec2 pos)
 {
 	//Checking if there is a wall there

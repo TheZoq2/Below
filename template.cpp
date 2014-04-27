@@ -66,12 +66,16 @@ void app::Loop (void)
 
 		player.setPosition(spawnPoint);
 
+		spawnPoint = world.getEnemySpawnPos();
+		enemy.create(spawnPoint);
+
 		gamestate = GAME;
 	}
 	if(gamestate == GAME)
 	{
 		player.update(&world);
 		world.update();
+		enemy.update(&world, &player);
 	}
 
 

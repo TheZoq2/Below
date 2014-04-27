@@ -183,6 +183,19 @@ void Player::update(World* world)
 	}
 
 	sword.update();
+
+	if(sword.getSwingState() == Sword::PREPARE)
+	{
+		float speedTarget = 0.2;
+		
+		Global::gamespeed = Global::gamespeed + 0.1 *(speedTarget - Global::gamespeed);
+	}
+	else
+	{
+		float speedTarget = 1;
+		
+		Global::gamespeed = Global::gamespeed + 0.1 *(speedTarget - Global::gamespeed);
+	}
 }
 
 void Player::setPosition(Vec3 pos)
@@ -195,4 +208,9 @@ void Player::setPosition(Vec3 pos)
 void Player::setSword(std::string filename, Vec3 pos)
 {
 	sword.create(filename, pos);
+}
+
+Vec3 Player::getPos()
+{
+	return pos;
 }

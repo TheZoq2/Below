@@ -9,6 +9,7 @@
 #include "Vec.h"
 #include "Input.h"
 #include "Global.h"
+#include "Enemy.h"
 
 #define DEVICE_WIDTH 1600
 #define DEVICE_HEIGHT 900
@@ -36,6 +37,7 @@ class app
 		World world;
 
 		Player player;
+		Enemy enemy;
 };
 
 extern app App;

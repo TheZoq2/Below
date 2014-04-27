@@ -53,6 +53,7 @@ public:
 	void clear();
 
 	Vec3 getSpawnpos();
+	Vec3 getEnemySpawnPos();
 	bool getTileWalkable(Vec2 pos);
 private:
 	std::vector<PartBase>* floorBase;

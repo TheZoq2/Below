@@ -17,13 +17,16 @@ void Sword::create(std::string filename, Vec3 scale)
 	agk::SetObjectScale(objID, scale.x, scale.y, scale.z);
 
 	targetPosObj = agk::CreateObjectBox(0.2, 0.2, 0.2);
-	agk::SetObjectVisible(targetPosObj, 0);
-	//targetPointObj = agk::CreateObjectBox(0.2, 0.2, 0.2);
-	targetPointObj = agk::CreateObjectCone(.2, 0.2, 10);
-	agk::SetObjectVisible(targetPointObj, 0);
+	//agk::SetObjectVisible(targetPosObj, 0);
+	targetPointObj = agk::CreateObjectBox(0.2, 0.2, 0.2);
+	//targetPointObj = agk::CreateObjectCone(.2, 0.2, 10);
+	//agk::SetObjectVisible(targetPointObj, 0);
 
 	swingPosObj = agk::CreateObjectSphere(0.2, 20, 20);
-	agk::SetObjectVisible(swingPosObj, 0);
+	//agk::SetObjectVisible(swingPosObj, 0);
+
+	int texture = agk::LoadImage("media/sword.png");
+	agk::SetObjectImage(objID, texture, 0);
 }
 /*void Sword::update()
 {
@@ -149,6 +152,8 @@ void Sword::update()
 		if(targetState == PREPARE)
 		{
 			state = PREPARE;
+
+			prepareStartTime = Global::gameTime;
 		}
 
 		//position the targets
@@ -176,19 +181,23 @@ void Sword::update()
 		//Calculating the "point target"
 		//It should be positioned behind the base pos, also depends on the current target angle
 
-		//Im lazy so im doing this with moveLocal
-		agk::SetObjectRotation(targetPointObj, 0, baseAngle.y, 0);
-		agk::SetObjectPosition(targetPointObj, basePos.x, basePos.y, basePos.z);
-		agk::RotateObjectLocalY(targetPointObj, -35);
-		agk::RotateObjectLocalZ(targetPointObj, 110);
-
-		agk::MoveObjectLocalX(targetPointObj, 1);
+		//The x offset will always be the same
+		//The y and z offset are based on the angle of the target
+		float xOffset = -0.5;
 		
-		//Saving the target point
-		targetPoint.x = agk::GetObjectX(targetPointObj) - basePos.x;
-		targetPoint.y = agk::GetObjectY(targetPointObj) - basePos.y;
-		targetPoint.z = agk::GetObjectZ(targetPointObj) - basePos.z;
+		targetPoint = Vec3(0, 0, 0);
+		targetPoint.x = agk::Cos(-baseAngle.y) * xOffset;
+		targetPoint.z = agk::Sin(-baseAngle.y) * xOffset;
+		//targetPoint.y = 1;
 
+		float yOffset = 1;
+		targetPoint.y = agk::Cos(-swingTargetAngleX) * yOffset;
+		//targetPoint.x = targetPoint.x + agk::Sin(-swingTargetAngleX) * yOffset;
+		float zOffsetTarget = agk::Sin(-swingTargetAngleX) * yOffset; //The offset amount relative to the sword
+
+		//Calculating the position of the target in world coords
+		targetPoint.x = targetPoint.x + agk::Cos(-baseAngle.y - 90) * zOffsetTarget;
+		targetPoint.z = targetPoint.z + agk::Sin(-baseAngle.y - 90) * zOffsetTarget;
 
 		//calculating the swing position
 		agk::SetObjectRotation(swingPosObj, 0, baseAngle.y, 0);
@@ -249,10 +258,15 @@ void Sword::update()
 	Vec3 lookAtPos = basePos + pointPos;
 
 	agk::SetObjectLookAt(objID, lookAtPos.x, lookAtPos.y, lookAtPos.z, 90);
+	//Making the sword face forward
+	if(state == NONE)
+	{
+		agk::RotateObjectLocalZ(objID, baseAngle.y + 90);
+	}
 
 	//Positioning the target objects for debugging
-	//agk::SetObjectPosition(targetPosObj, targetPos.x, targetPos.y, targetPos.z);
-	//agk::SetObjectPosition(targetPointObj, targetPoint.x, targetPoint.y, targetPoint.z);
+	agk::SetObjectPosition(targetPosObj, targetPos.x, targetPos.y, targetPos.z);
+	agk::SetObjectPosition(targetPointObj, targetPoint.x + basePos.x, targetPoint.y + basePos.y, targetPoint.z + basePos.z);
 }
 
 void Sword::setPosition(Vec3 basePos)
@@ -266,6 +280,10 @@ void Sword::setBaseAngle(float x, float y, float z)
 	this->baseAngle.x = x;
 	this->baseAngle.y = y;
 	this->baseAngle.z = z;
+}
+void Sword::setBaseAngle(Vec3 baseAngle)
+{
+	this->baseAngle = baseAngle;
 }
 void Sword::setSwingTargetState(SWINGSTATE targetState)
 {
@@ -286,5 +304,22 @@ Vec3 Sword::getCurrentAngle()
 }
 Vec3 Sword::getCurrentPosition()
 {
-	return this->cPos;
+	return this->posPos + basePos;
+}
+bool Sword::getSwordReady()
+{
+	Vec3 posDiff = posPos - targetPos;
+	Vec3 pointDiff = pointPos - targetPoint;
+
+	float tolerance = 0.05;
+
+	if(abs(posDiff.x) < tolerance && abs(posDiff.y) < tolerance && abs(posDiff.z) < tolerance)
+	{
+		if(abs(pointDiff.x) < tolerance && abs(pointDiff.y) < tolerance && abs(pointDiff.z) < tolerance)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

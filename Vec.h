@@ -24,4 +24,5 @@ public:
 
 	Vec3 operator=(Vec3);
 	Vec3 operator+(Vec3);
+	Vec3 operator-(Vec3);
 };

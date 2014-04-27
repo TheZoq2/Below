@@ -22,10 +22,14 @@ public:
 
 	void setPosition(Vec3 pos);
 	void setBaseAngle(float x, float y, float z);
+	void setBaseAngle(Vec3 baseAngle);
 
 	SWINGSTATE getSwingState();
 	Vec3 getCurrentAngle();
 	Vec3 getCurrentPosition();
+	float getPrepareStart();
+	float getSwingStart();
+	bool getSwordReady();
 private:
 	int objID;
 	int targetPosObj;
@@ -44,6 +48,7 @@ private:
 	float swingTargetAngleX;
 	float finalSwingTAngle; //The angle of the swingTarget when the swing starts
 	float swingStartTime;
+	float prepareStartTime;
 
 	Vec3 targetPos;
 	Vec3 targetPoint;

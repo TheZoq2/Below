@@ -20,6 +20,8 @@ public:
 	void setPosition(Vec3 pos);
 
 	void setSword(std::string filename, Vec3 scale);
+
+	Vec3 getPos();
 private:
 	int objID;
 	int swordTargetObj;
@@ -32,5 +34,7 @@ private:
 
 	Sword sword;
 	float swordTargetAngle;
+
+	float swingStart;
 };
 
